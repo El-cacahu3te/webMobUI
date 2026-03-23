@@ -97,7 +97,7 @@ customElements.define("page-player", class extends HTMLElement {
     audioPlayer.addEventListener('pause', this.updatePlayButton);
 
     // Change l'affichage du temps écoulé
-    
+    audioPlayer.addEventListener('timeupdate', this.updateCurrentTime)
 
     // Interaction avec les boutons principaux
     this.playButton.addEventListener('click', () => {
@@ -108,7 +108,7 @@ customElements.define("page-player", class extends HTMLElement {
   this.prevButton.addEventListener('click', playPreviousSong);
 
     // Interaction avec la progress bar
-    
+  this.progressBar.addEventListener('input', () => {
 
   }
 
