@@ -5,12 +5,14 @@ let currentSongList = []
 let currentSong = null
 
 const playSong = (song, songs) => {
-  currentSong = song
+  currentSong = song; //chanson en cours de lecture
   if (songs) {
-    currentSongList = songs
+    currentSongList = songs; //si on passe un tableau de chanson il met a jour la playlist avec la liste qu'on vient de passer dedans
   }
 
   // On donne l'url au player et démarre la lecture
+  audioPlayer.src = currentSong.audio_url; 
+  audioPlayer.play(); 
   
 }
 

@@ -90,16 +90,22 @@ customElements.define("page-player", class extends HTMLElement {
     this.updatePlayButton = this.updatePlayButton.bind(this);
 
     // Change les infos quand une nouvelle chanson est chargée
-
+    audioPlayer.addEventListener('loadeddata', this.updatePlayerInfos);
 
     // Change l'affichage du bouton play
-    
+    audioPlayer.addEventListener('play', this.updatePlayButton);
+    audioPlayer.addEventListener('pause', this.updatePlayButton);
 
     // Change l'affichage du temps écoulé
     
 
     // Interaction avec les boutons principaux
-    
+    this.playButton.addEventListener('click', () => {
+      if(!currentSong) return
+    audioPlayer.paused ? audioPlayer.play() : audioPlayer.pause()
+  }); 
+  this.nextButton.addEventListener('click', playNextSong);
+  this.prevButton.addEventListener('click', playPreviousSong);
 
     // Interaction avec la progress bar
     
@@ -108,13 +114,15 @@ customElements.define("page-player", class extends HTMLElement {
 
   // Mise à jour des différentes infos de la plage player d'après la chanson en cours
   updatePlayerInfos() {
-    if (!currentSong) return
+    if (!currentSong) return //si pas de chanson en cours on retourne la fonction sans faire la suite 
     // infos de la chanson
-    
-
+    this.songImage.src = currentSong.artist.image_url; //on change la cover de la chanson avec l'image de l'artiste de la chanson en cours
+    this.songTitle.textContent = currentSong.title; //on change le titre de la chanson avec le titre de la chanson en cours 
+    //songTitle récupère l'élément texte content récupère le contenu textuel 
+    this.songArtist.textContent = currentSong.artist.name; 
     // durée de la chanson
-    
-
+    this.timeDuration.textContent = formatTimestamp(audioPlayer.duration); //on change la durée totale de la chanson avec la durée de la chanson en cours formatée en minutes et secondes avec la fonction formatTimestamp
+    this.progressBar.max = audioPlayer.duration; //on change la valeur maximale de la progress bar avec la durée de la chanson en cours pour que la progress bar soit à 100% à la fin de la chanson 
     this.updatePlayButton();
     this.updateCurrentTime();
     
@@ -122,11 +130,14 @@ customElements.define("page-player", class extends HTMLElement {
 
   // Mise à jour de l'affichage du temps écoulé
   updateCurrentTime() {
-    
+      this.timeCurrent.textContent = formatTimestamp(audioPlayer.currentTime); //on change le temps écoulé de la chanson avec le temps actuel  mais ne s'update pas encore de la chanson en cours formatée en minutes et secondes avec la fonction formatTimestamp
+      this.progressBar.value = audioPlayer.currentTime; //on change la valeur de la progress bar avec le temps actuel de la chanson en cours pour que la progress bar avance au fur et à mesure que la chanson avance
+      //element audio est des attributs propres dont currentTime qui correspond au temps actuel de la chanson en cours et duration qui correspond à la durée totale de la chanson en cours, ces attributs sont mis à jour automatiquement par le navigateur lorsque la chanson est jouée ou que l'utilisateur interagit avec la progress bar pour changer le temps actuel de la chanson en cours
   }
 
   // Mise à jour de l'affichage du bouton play/pause
   updatePlayButton() {
+    this.playButton.querySelector('span').textContent = audioPlayer.paused ? 'play_arrow' :  'pause';
     
   }
 })
