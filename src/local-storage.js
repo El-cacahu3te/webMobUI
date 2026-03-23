@@ -14,15 +14,15 @@ const removeItem = (key) => {
 
 // interaction avec les favoris
 const FAVORITES_KEY = 'favorites'
-
+//tableau de favoris 
 const getFavorites = () => {
     return getItem(FAVORITES_KEY) ?? [];
 }
-
+//update du tableau favoris 
 const addFavorite = (song) => {
     const favs = getFavorites();
     favs.push(song);
-    setItem('favorites', favs);
+    setItem(FAVORITES_KEY, favs);
 }
 
 const getFavorite = (id) => {
