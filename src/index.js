@@ -57,7 +57,7 @@ const setupOfflineMode = () => {
 }; 
 
 const connectServiceWorkers = () => {
-  navigator.serviceWorker.register('/stale-while-revalidating.js'); 
+  navigator.serviceWorker.register('/OneSignalSDKWorker.js'); 
   //tout ce qui est dans publique va se retrouver à la racine du site 
   
 }
