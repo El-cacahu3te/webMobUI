@@ -12,6 +12,7 @@ import './pages/page-artist-songs.js'
 import './pages/page-search-songs.js'
 import './pages/page-favorite-songs.js'
 
+
 const router = () => {
   const main = document.querySelector('main')
   const hashs = (window.location.hash || '#home').split('/')
@@ -56,6 +57,8 @@ const setupOfflineMode = () => {
 }; 
 
 const connectServiceWorkers = () => {
+  navigator.serviceWorker.register('/stale-while-revalidating.js'); 
+  //tout ce qui est dans publique va se retrouver à la racine du site 
   
 }
 
